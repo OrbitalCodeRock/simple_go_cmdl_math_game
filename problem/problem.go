@@ -5,7 +5,7 @@ func GenerateProblem(difficulty int) Problem {
 }
 
 type Problem interface {
-	InitializeProblem(difficulty int) int
+	InitializeProblem() int
 	GetDifficulty() int
 	String() string
 	CheckAnswer(answer string) bool
@@ -15,7 +15,7 @@ type AdditionProblem struct {
 	op1, op2, answer, difficulty int
 }
 
-func (problem AdditionProblem) InitializeProblem(difficulty int) {
+func (problem AdditionProblem) InitializeProblem() {
 	// Generate op1 and op2 using difficulty
 	problem.answer = problem.op1 + problem.op2
 }
@@ -36,7 +36,7 @@ type SubtractionProblem struct {
 	op1, op2, answer, difficulty int
 }
 
-func (problem SubtractionProblem) InitializeProblem(difficulty int) {
+func (problem SubtractionProblem) InitializeProblem() {
 	// Generate op1 and op2 using difficulty
 	problem.answer = problem.op1 - problem.op2
 }
@@ -57,7 +57,7 @@ type MultiplicationProblem struct {
 	op1, op2, answer, difficulty int
 }
 
-func (problem MultiplicationProblem) InitializeProblem(difficulty int) {
+func (problem MultiplicationProblem) InitializeProblem() {
 	// Generate op1 and op2 using difficulty
 	problem.answer = problem.op1 * problem.op2
 }
@@ -78,7 +78,7 @@ type DivisionProblem struct {
 	op1, op2, answer, difficulty int
 }
 
-func (problem DivisionProblem) InitializeProblem(difficulty int) {
+func (problem DivisionProblem) InitializeProblem() {
 	// Generate op1 and op2 using difficulty
 	problem.answer = problem.op1 / problem.op2
 }
