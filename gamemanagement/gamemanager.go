@@ -1,14 +1,14 @@
 package gamemanagement
 
 type GameSettings struct {
-	GameLength     int
-	GameDifficulty int
-	MathTypes      int
+	GameLength     int32
+	GameDifficulty int32
+	MathTypes      int32
 }
 
 type GameStats struct {
-	ProblemsCorrect   int
-	ProblemsIncorrect int
+	ProblemsCorrect   int32
+	ProblemsIncorrect int32
 }
 
 type GameManager struct {

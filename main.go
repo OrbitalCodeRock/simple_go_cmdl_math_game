@@ -22,7 +22,7 @@ func main() {
 	for keepRunning {
 		// List current settings here
 		iomanagement.ListMainMenuOptions()
-		var option int = iomanagement.CollectIntegerInRange(1, 3)
+		var option int32 = iomanagement.CollectIntegerInRange(1, 3)
 		switch option {
 		case 1:
 			runGame()
@@ -60,7 +60,7 @@ func runGame(gameManager gamemanagement.GameManager) {
 		var answerCorrect bool = mathProblem.CheckAnswer(answer)
 		if answerCorrect{
 			gameManager.Stats.ProblemsCorrect++
-			fmt.Println("That's Correct!")
+			fmt.Println("That's correct!")
 		}else{
 			gameManager.Stats.ProblemsIncorrect--
 			fmt.Println("That answer was incorrect.")
@@ -74,9 +74,9 @@ func runGame(gameManager gamemanagement.GameManager) {
 // gameManager - Game Manager object used to derive the total length of the game.
 // warningFrequency - How often, in minutes, that warnings should be outputted to the user.
 // timeUp - Pointer to a boolean that is set to true once time has run out.
-func startGameTimer(gameManager gamemanagement.GameManager, warningFrequency int, timeUp *boolean){
-	ticker := time.NewTicker(gameManager.Settings.GameLength * int(time.Minute))
-	var minutes int = 0
+func startGameTimer(gameManager gamemanagement.GameManager, warningFrequency int32, timeUp *boolean){
+	ticker := time.NewTicker(gameManager.Settings.GameLength * int32(time.Minute))
+	var minutes int32 = 0
 	for minutesLeft := gameManager.Settings.GameLength; minutesLeft > 0; minutesLeft--{
 		<-ticker.C
 		if minutes % warningFrequency == 0{
@@ -93,21 +93,21 @@ func changeSettings(gameManager *gamemanagement.GameManager) {
 	var keepSetting bool = true
 	for keepSetting {
 		iomanagement.ListSettingOptions()
-		var option int = iomanagement.CollectIntegerInRange(1, 4)
+		var option int32 = iomanagement.CollectIntegerInRange(1, 4)
 		switch option {
 		case 1:
 			fmt.Println("Please enter the # of minutes you would like to play, from 1 to 10.")
-			var minutes int = iomanagement.CollectIntegerInRange(1, 10)
+			var minutes int32 = iomanagement.CollectIntegerInRange(1, 10)
 			gameManager.Settings.GameLength = minutes
 		case 2:
 			fmt.Println("Please enter a difficulty level, from 1 to 10.")
-			var difficulty int = iomanagement.CollectIntegerInRange(1, 10)
+			var difficulty int32 = iomanagement.CollectIntegerInRange(1, 10)
 			gameManager.Settings.GameDifficulty = difficulty
 		case 3:
 			fmt.Println("Please choose the math types of the game. Enter a non-seperated 4-character sequence of 0s and 1s.\n
 			            1: Present, 0: Not Present, 1st Digit: Addition, 2nd Digit: Subtraction, 3rd Digit: Multiplication,
 						 4th Digit: Division. Example: \"1000\" - Addition only, \"1010\" - Addition and Multiplication")
-			var mathTypes int = iomanagement.CollectBitmap(4)
+			var mathTypes int32 = iomanagement.CollectBitmap(4)
 			gameManager.Settings.MathTypes = mathTypes
 		case 4:
 			keepSetting = false

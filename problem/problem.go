@@ -1,18 +1,18 @@
 package problem
 
-func GenerateProblem(difficulty int) Problem {
+func GenerateProblem(difficulty int32) Problem {
 
 }
 
 type Problem interface {
-	InitializeProblem() int
-	GetDifficulty() int
+	InitializeProblem() int32
+	GetDifficulty() int32
 	String() string
-	CheckAnswer(answer string) bool
+	CheckAnswer(answer int32) bool
 }
 
 type AdditionProblem struct {
-	op1, op2, answer, difficulty int
+	op1, op2, answer, difficulty int32
 }
 
 func (problem AdditionProblem) InitializeProblem() {
@@ -20,7 +20,7 @@ func (problem AdditionProblem) InitializeProblem() {
 	problem.answer = problem.op1 + problem.op2
 }
 
-func (problem AdditionProblem) GetDifficulty() int {
+func (problem AdditionProblem) GetDifficulty() int32 {
 	return problem.difficulty
 }
 
@@ -28,12 +28,14 @@ func (problem AdditionProblem) String() string {
 
 }
 
-func (problem AdditionProblem) CheckAnswer(answer string) bool {
+// Assumes that the answer string is of proper format.
+// Proper format: A string containing just a 32-bit signed integer value.
+func (problem AdditionProblem) CheckAnswer(answer int32) bool {
 
 }
 
 type SubtractionProblem struct {
-	op1, op2, answer, difficulty int
+	op1, op2, answer, difficulty int32
 }
 
 func (problem SubtractionProblem) InitializeProblem() {
@@ -41,7 +43,7 @@ func (problem SubtractionProblem) InitializeProblem() {
 	problem.answer = problem.op1 - problem.op2
 }
 
-func (problem SubtractionProblem) GetDifficulty() int {
+func (problem SubtractionProblem) GetDifficulty() int32 {
 	return problem.difficulty
 }
 
@@ -54,7 +56,7 @@ func (problem SubtractionProblem) CheckAnswer(answer string) bool {
 }
 
 type MultiplicationProblem struct {
-	op1, op2, answer, difficulty int
+	op1, op2, answer, difficulty int32
 }
 
 func (problem MultiplicationProblem) InitializeProblem() {
@@ -62,7 +64,7 @@ func (problem MultiplicationProblem) InitializeProblem() {
 	problem.answer = problem.op1 * problem.op2
 }
 
-func (problem MultiplicationProblem) GetDifficulty() int {
+func (problem MultiplicationProblem) GetDifficulty() int32 {
 	return problem.difficulty
 }
 
@@ -75,7 +77,7 @@ func (problem MultiplicationProblem) CheckAnswer(answer string) bool {
 }
 
 type DivisionProblem struct {
-	op1, op2, answer, difficulty int
+	op1, op2, answer, difficulty int32
 }
 
 func (problem DivisionProblem) InitializeProblem() {
@@ -83,7 +85,7 @@ func (problem DivisionProblem) InitializeProblem() {
 	problem.answer = problem.op1 / problem.op2
 }
 
-func (problem DivisionProblem) GetDifficulty() int {
+func (problem DivisionProblem) GetDifficulty() int32 {
 	return problem.difficulty
 }
 
