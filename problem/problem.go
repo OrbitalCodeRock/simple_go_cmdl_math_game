@@ -1,6 +1,8 @@
 package problem
 
-func GenerateProblem(difficulty int32) Problem {
+import "fmt"
+
+func GenerateProblem(difficulty int32, allowedTypes int32) Problem {
 
 }
 
@@ -25,13 +27,13 @@ func (problem AdditionProblem) GetDifficulty() int32 {
 }
 
 func (problem AdditionProblem) String() string {
-
+	return fmt.Sprintf("Addition Problem: %d + %d = ?\n", problem.op1, problem.op2)
 }
 
 // Assumes that the answer string is of proper format.
 // Proper format: A string containing just a 32-bit signed integer value.
 func (problem AdditionProblem) CheckAnswer(answer int32) bool {
-
+	return answer == problem.answer
 }
 
 type SubtractionProblem struct {
@@ -48,11 +50,11 @@ func (problem SubtractionProblem) GetDifficulty() int32 {
 }
 
 func (problem SubtractionProblem) String() string {
-
+	return fmt.Sprintf("Subtraction Problem: %d - %d = ?\n", problem.op1, problem.op2)
 }
 
 func (problem SubtractionProblem) CheckAnswer(answer int32) bool {
-
+	return answer == problem.answer
 }
 
 type MultiplicationProblem struct {
@@ -69,11 +71,11 @@ func (problem MultiplicationProblem) GetDifficulty() int32 {
 }
 
 func (problem MultiplicationProblem) String() string {
-
+	return fmt.Sprintf("Multiplication Problem: %d * %d = ?\n", problem.op1, problem.op2)
 }
 
 func (problem MultiplicationProblem) CheckAnswer(answer int32) bool {
-
+	return answer == problem.answer
 }
 
 type DivisionProblem struct {
@@ -90,9 +92,9 @@ func (problem DivisionProblem) GetDifficulty() int32 {
 }
 
 func (problem DivisionProblem) String() string {
-
+	return fmt.Sprintf("Division Problem: %d / %d = ?\n", problem.op1, problem.op2)
 }
 
 func (problem DivisionProblem) CheckAnswer(answer int32) bool {
-
+	return answer == problem.answer
 }

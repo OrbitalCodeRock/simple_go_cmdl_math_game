@@ -40,7 +40,7 @@ func runGame(gameManager *gamemanagement.GameManager) {
 	timeUp := false
 	go startGameTimer(gameManager, 2, &timeUp)
 	for !timeUp {
-		mathProblem := problem.GenerateProblem(gameManager.Settings.GameDifficulty)
+		mathProblem := problem.GenerateProblem(gameManager.Settings.GameDifficulty, gameManager.Settings.MathTypes)
 		fmt.Println(mathProblem)
 		var answer int32
 		switch mathProblem.(type) {
@@ -104,8 +104,7 @@ func changeSettings(gameManager *gamemanagement.GameManager) {
 			1: Present, 0: Not Present, 1st Digit: Addition, 2nd Digit: Subtraction, 3rd Digit: Multiplication, 4th Digit: Division. 
 			Examples: "1000" - Addition only, "1010" - Addition and Multiplication`
 			fmt.Println(mathTypeOptions)
-			var mathTypes int32 = iomanagement.CollectBitmap(4)
-			gameManager.Settings.MathTypes = mathTypes
+			gameManager.Settings.MathTypes = iomanagement.CollectBitmap(4)
 		case 4:
 			keepSetting = false
 		}
