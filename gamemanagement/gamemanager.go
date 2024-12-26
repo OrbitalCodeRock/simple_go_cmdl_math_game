@@ -1,7 +1,7 @@
 package gamemanagement
 
 type GameSettings struct {
-	GameLength     int32
+	GameLength     int64
 	GameDifficulty int32
 	MathTypes      int32
 }

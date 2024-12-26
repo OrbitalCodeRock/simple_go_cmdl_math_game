@@ -5,7 +5,7 @@ func GenerateProblem(difficulty int32) Problem {
 }
 
 type Problem interface {
-	InitializeProblem() int32
+	InitializeProblem()
 	GetDifficulty() int32
 	String() string
 	CheckAnswer(answer int32) bool
@@ -51,7 +51,7 @@ func (problem SubtractionProblem) String() string {
 
 }
 
-func (problem SubtractionProblem) CheckAnswer(answer string) bool {
+func (problem SubtractionProblem) CheckAnswer(answer int32) bool {
 
 }
 
@@ -72,7 +72,7 @@ func (problem MultiplicationProblem) String() string {
 
 }
 
-func (problem MultiplicationProblem) CheckAnswer(answer string) bool {
+func (problem MultiplicationProblem) CheckAnswer(answer int32) bool {
 
 }
 
@@ -93,6 +93,6 @@ func (problem DivisionProblem) String() string {
 
 }
 
-func (problem DivisionProblem) CheckAnswer(answer string) bool {
+func (problem DivisionProblem) CheckAnswer(answer int32) bool {
 
 }
