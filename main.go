@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 
 	"github.com/OrbitalCodeRock/simple_go_cmdl_math_game/gamemanagement"
@@ -10,6 +11,10 @@ import (
 )
 
 func main() {
+	// Seed random number generator
+	var seed = time.Now().UnixNano()
+	numSource := rand.NewSource(seed)
+
 	// Set default game settings
 	var gameManager gamemanagement.GameManager
 	gameManager.Settings = gamemanagement.GameSettings{
@@ -25,7 +30,7 @@ func main() {
 		var option int32 = iomanagement.CollectIntegerInRange(1, 3)
 		switch option {
 		case 1:
-			runGame(&gameManager)
+			runGame(&gameManager, &numSource)
 		case 2:
 			changeSettings(&gameManager)
 		case 3:
@@ -36,11 +41,11 @@ func main() {
 }
 
 // Private method for running the game.
-func runGame(gameManager *gamemanagement.GameManager) {
+func runGame(gameManager *gamemanagement.GameManager, numSource *rand.Source) {
 	timeUp := false
 	go startGameTimer(gameManager, 2, &timeUp)
 	for !timeUp {
-		mathProblem := problem.GenerateProblem(gameManager.Settings.GameDifficulty, gameManager.Settings.MathTypes)
+		mathProblem := problem.GenerateProblem(gameManager.Settings.GameDifficulty, gameManager.Settings.MathTypes, numSource)
 		fmt.Println(mathProblem)
 		var answer int32
 		switch mathProblem.(type) {
@@ -102,7 +107,7 @@ func changeSettings(gameManager *gamemanagement.GameManager) {
 		case 3:
 			var mathTypeOptions string = `Please choose the math types of the game. Enter a non-seperated 4-character sequence of 0s and 1s.
 			1: Present, 0: Not Present, 1st Digit: Addition, 2nd Digit: Subtraction, 3rd Digit: Multiplication, 4th Digit: Division. 
-			Examples: "1000" - Addition only, "1010" - Addition and Multiplication`
+			Examples: "0001" - Addition only, "0101" - Addition and Multiplication`
 			fmt.Println(mathTypeOptions)
 			gameManager.Settings.MathTypes = iomanagement.CollectBitmap(4)
 		case 4:
