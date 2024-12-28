@@ -87,8 +87,8 @@ func generateRandomOperand(difficulty int32, numSource *rand.Source) int32 {
 		minOpDigits = 1
 	}
 
-	var maxNum = int32(math.Pow10(int(maxOpDigits+1))) - 1
-	var minNum = int32(math.Pow10(int(minOpDigits)))
+	var maxNum = int32(math.Pow10(int(maxOpDigits))) - 1
+	var minNum = int32(math.Pow10(int(minOpDigits-1))) - 1
 
 	randomOp := (*numSource).Int63()
 	for randomOp > int64(maxNum) {
@@ -153,8 +153,9 @@ type MultiplicationProblem struct {
 
 func (problem *MultiplicationProblem) InitializeProblem(difficulty int32, numSource *rand.Source) {
 	problem.difficulty = difficulty
-	problem.op1 = generateRandomOperand(difficulty, numSource)
-	problem.op2 = generateRandomOperand(difficulty, numSource)
+	// Since multiplication problems are significantly more difficult than addition or subtraction problems, we decrease the difficulty for these problems.
+	problem.op1 = generateRandomOperand(difficulty-difficulty/2, numSource)
+	problem.op2 = generateRandomOperand(difficulty-difficulty/2, numSource)
 	problem.answer = problem.op1 * problem.op2
 }
 
@@ -176,8 +177,9 @@ type DivisionProblem struct {
 
 func (problem *DivisionProblem) InitializeProblem(difficulty int32, numSource *rand.Source) {
 	problem.difficulty = difficulty
-	problem.op1 = generateRandomOperand(difficulty, numSource)
-	problem.op2 = generateRandomOperand(difficulty, numSource)
+	// Since division problems are significantly more difficult than addition or subtraction problems, we decrease the difficulty for these problems.
+	problem.op1 = generateRandomOperand(difficulty-difficulty/2, numSource)
+	problem.op2 = generateRandomOperand(difficulty-difficulty/2, numSource)
 	problem.answer = problem.op1 / problem.op2
 }
 
@@ -186,7 +188,7 @@ func (problem *DivisionProblem) GetDifficulty() int32 {
 }
 
 func (problem *DivisionProblem) String() string {
-	return fmt.Sprintf("Division Problem: %d / %d = ?\n", problem.op1, problem.op2)
+	return fmt.Sprintf("Division Problem: %d / %d = ?. Answer without the remainder, in other words, round to the nearest integer toward 0 (including 0).\n", problem.op1, problem.op2)
 }
 
 func (problem *DivisionProblem) CheckAnswer(answer int32) bool {

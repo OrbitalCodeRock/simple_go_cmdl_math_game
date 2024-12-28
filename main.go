@@ -76,12 +76,18 @@ func runGame(gameManager *gamemanagement.GameManager, numSource *rand.Source) {
 // warningFrequency - How often, in minutes, that warnings should be outputted to the user.
 // timeUp - Pointer to a boolean that is set to true once time has run out.
 func startGameTimer(gameManager *gamemanagement.GameManager, warningFrequency int32, timeUp *bool) {
-	ticker := time.NewTicker(time.Duration(gameManager.Settings.GameLength) * time.Minute)
-	var minutes int32 = 0
+	ticker := time.NewTicker(time.Minute)
+	var minutes int32 = 1
 	for minutesLeft := gameManager.Settings.GameLength; minutesLeft > 0; minutesLeft-- {
 		<-ticker.C
 		if minutes%warningFrequency == 0 {
-			fmt.Printf("%d minutes remain!\n", minutesLeft)
+			switch minutesLeft {
+			case 1:
+				fmt.Printf("\n%d minute remains!\n", minutesLeft)
+			default:
+				fmt.Printf("\n%d minutes remain!\n", minutesLeft)
+			}
+
 		}
 		minutes++
 	}
