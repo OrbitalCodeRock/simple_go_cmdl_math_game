@@ -49,13 +49,13 @@ func runGame(gameManager *gamemanagement.GameManager, numSource *rand.Source) {
 		fmt.Println(mathProblem)
 		var answer int32
 		switch mathProblem.(type) {
-		case problem.AdditionProblem:
+		case *problem.AdditionProblem:
 			answer = iomanagement.ReadAdditionAnswer()
-		case problem.SubtractionProblem:
+		case *problem.SubtractionProblem:
 			answer = iomanagement.ReadSubtractionAnswer()
-		case problem.MultiplicationProblem:
+		case *problem.MultiplicationProblem:
 			answer = iomanagement.ReadMultiplicationAnswer()
-		case problem.DivisionProblem:
+		case *problem.DivisionProblem:
 			answer = iomanagement.ReadDivisionAnswer()
 		}
 		var answerCorrect bool = mathProblem.CheckAnswer(answer)
@@ -63,7 +63,7 @@ func runGame(gameManager *gamemanagement.GameManager, numSource *rand.Source) {
 			gameManager.Stats.ProblemsCorrect++
 			fmt.Println("That's correct!")
 		} else {
-			gameManager.Stats.ProblemsIncorrect--
+			gameManager.Stats.ProblemsIncorrect++
 			fmt.Println("That answer was incorrect.")
 		}
 	}
@@ -81,7 +81,7 @@ func startGameTimer(gameManager *gamemanagement.GameManager, warningFrequency in
 	for minutesLeft := gameManager.Settings.GameLength; minutesLeft > 0; minutesLeft-- {
 		<-ticker.C
 		if minutes%warningFrequency == 0 {
-			fmt.Printf("%d minutes remain!", minutesLeft)
+			fmt.Printf("%d minutes remain!\n", minutesLeft)
 		}
 		minutes++
 	}

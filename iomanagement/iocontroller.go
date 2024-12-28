@@ -2,7 +2,6 @@ package iomanagement
 
 import (
 	"fmt"
-	"math"
 	"strconv"
 
 	"github.com/OrbitalCodeRock/simple_go_cmdl_math_game/gamemanagement"
@@ -48,7 +47,10 @@ func parseInt32() (int32, *strconv.NumError) {
 
 	answerInt = int32(ans)
 
-	numErr := err.(*strconv.NumError)
+	var numErr *strconv.NumError = nil
+	if err != nil {
+		numErr = err.(*strconv.NumError)
+	}
 
 	return answerInt, numErr
 }
@@ -65,7 +67,10 @@ func parseInt32Base2() (int32, *strconv.NumError) {
 
 	answerInt = int32(ans)
 
-	numErr := err.(*strconv.NumError)
+	var numErr *strconv.NumError = nil
+	if err != nil {
+		numErr = err.(*strconv.NumError)
+	}
 
 	return answerInt, numErr
 }
@@ -91,7 +96,8 @@ func readAnswerAsInt32(startMessage string, syntaxErrorMessage string, rangeErro
 	fmt.Println(startMessage)
 	for {
 		answerInt, numErr := parseInt32()
-		if handleNumError(*numErr, syntaxErrorMessage, rangeErrorMessage) {
+		// If there isn't an error, return the parsed answer.
+		if numErr == nil || handleNumError(*numErr, syntaxErrorMessage, rangeErrorMessage) {
 			return answerInt
 		}
 	}
@@ -104,7 +110,7 @@ func readAnswerAsInt32Base2(startMessage string, syntaxErrorMessage string, rang
 	fmt.Println(startMessage)
 	for {
 		answerInt, numErr := parseInt32Base2()
-		if handleNumError(*numErr, syntaxErrorMessage, rangeErrorMessage) {
+		if numErr == nil || handleNumError(*numErr, syntaxErrorMessage, rangeErrorMessage) {
 			return answerInt
 		}
 	}
@@ -154,7 +160,7 @@ func CollectIntegerInRange(lowerBound int32, upperBound int32) int32 {
 // Function for collecting a bitmap from user input.
 func CollectBitmap(options int32) int32 {
 
-	var answerLimit int32 = int32(math.Pow(2, float64(options)) - 1)
+	var answerLimit int32 = (1 << options) - 1
 	var answerInt int32 = 0
 	var startMessage string = ""
 	var rangeErrorMessage string = fmt.Sprintf("The answer was too large or too small. Please type an integer between %b and %b\n", 0, answerLimit)
