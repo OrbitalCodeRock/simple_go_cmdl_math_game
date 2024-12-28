@@ -33,8 +33,10 @@ input differently depending on the type of problem. */
 
 // For now, these are essentially identical.
 
-// Helper function for parsing an int32 from a string. This function does not handle errors, but instead, returns the error
-// information to be handeled by the caller.
+// Helper method for parsing an integer value from user input.
+// Returns the parsed integer.
+// Returns error information. Indicates whether or not there is no error, if there is a syntax error, or if there is a range error.
+// This error information is retrieved from strconv.ParseInt
 func parseInt32() (int32, *strconv.NumError) {
 	// Read the answer from standard input.
 	// Answer should be a single integer value.
@@ -55,6 +57,10 @@ func parseInt32() (int32, *strconv.NumError) {
 	return answerInt, numErr
 }
 
+// Helper method for parsing an integer value from user input. The string is intepreted as a base 2 value.
+// Returns the parsed integer.
+// Returns error information. Indicates whether or not there is no error, if there is a syntax error, or if there is a range error.
+// This error information is retrieved from strconv.ParseInt
 func parseInt32Base2() (int32, *strconv.NumError) {
 	// Read the answer from standard input.
 	// Answer should be a single integer value.
@@ -76,6 +82,9 @@ func parseInt32Base2() (int32, *strconv.NumError) {
 }
 
 // Returns true if an error is not present, false otherwise. Allows you to print error messages for each error case.
+// numErr - Contains information surrounding the type of error detected from strconv.ParseInt. This is nil if there is no error.
+// syntaxErrorMessage - A message to be printed when the user input cannot be parsed as an integer.
+// rangeErrorMessage - A message to be printed when the user input is parsed as an integer that is too large or too small.
 func handleNumError(numErr strconv.NumError, syntaxErrorMessage string, rangeErrorMessage string) bool {
 	switch numErr.Err {
 	case strconv.ErrSyntax:
@@ -91,7 +100,9 @@ func handleNumError(numErr strconv.NumError, syntaxErrorMessage string, rangeErr
 }
 
 // Helper function for repeatedly asking for user input until a valid int32 value is accessed.
-// The start message is printed once before the start of the loop
+// startMessage - A message to be printed before reading any user input. This message is only printed once.
+// syntaxErrorMessage - A message to be printed when the user input cannot be parsed as an integer.
+// rangeErrorMessage - A message to be printed when the user input is parsed as an integer that is too large or too small.
 func readAnswerAsInt32(startMessage string, syntaxErrorMessage string, rangeErrorMessage string) int32 {
 	fmt.Println(startMessage)
 	for {
@@ -103,9 +114,11 @@ func readAnswerAsInt32(startMessage string, syntaxErrorMessage string, rangeErro
 	}
 }
 
-// Helper function for repeatedly asking for user input until a valid int32 value is accessed.
+// Helper function for repeatedly asking for user input until a valid int32 value is retrieved.
 // The value will be interpreted in base 2.
-// The start message is printed once before the start of the loop
+// startMessage - A message to be printed before reading any user input. This message is only printed once.
+// syntaxErrorMessage - A message to be printed when the user input cannot be parsed as an integer.
+// rangeErrorMessage - A message to be printed when the user input is parsed as an integer that is too large or too small.
 func readAnswerAsInt32Base2(startMessage string, syntaxErrorMessage string, rangeErrorMessage string) int32 {
 	fmt.Println(startMessage)
 	for {
@@ -116,33 +129,46 @@ func readAnswerAsInt32Base2(startMessage string, syntaxErrorMessage string, rang
 	}
 }
 
+// Default messages for the functions below.
 var startMessage string = "Please enter an integer value: "
 var syntaxErrorMessage string = "The answer format was invalid. It was either empty or contaned invalid characters. Please try again."
 var rangeErrorMessage string = "The answer was too large or too small. Please type an integer between -2,147,483,648 and 2,147,483,647"
 
 // Function for gathering an answer for an addition problem from the user.
+// Returns the read answer as an integer.
 func ReadAdditionAnswer() int32 {
 	return readAnswerAsInt32(startMessage, syntaxErrorMessage, rangeErrorMessage)
 }
 
+// Function for reading a subtraction problem answer from the user.
+// Returns the read answer as an integer.
 func ReadSubtractionAnswer() int32 {
 	return readAnswerAsInt32(startMessage, syntaxErrorMessage, rangeErrorMessage)
 }
 
+// Function for reading a multiplication problem answer from the user.
+// Returns the read answer as an integer.
 func ReadMultiplicationAnswer() int32 {
 	return readAnswerAsInt32(startMessage, syntaxErrorMessage, rangeErrorMessage)
 }
 
+// Function for reading a division problem answer from the user.
+// Returns the read answer as an integer.
 func ReadDivisionAnswer() int32 {
 	return readAnswerAsInt32(startMessage, syntaxErrorMessage, rangeErrorMessage)
 }
 
+// Prints a game over message tailored to game statistics.
+// stats - The stats struct containing the statistics for the game that just ended.
 func PrintGameOver(stats gamemanagement.GameStats) {
 	var gameOverString string = fmt.Sprintf("Game Over!\nYou solved %d problems correctly\nYou answered %d problems incorrectly\n", stats.ProblemsCorrect, stats.ProblemsIncorrect)
 	fmt.Print(gameOverString)
 }
 
-// Function for collecting an integer value in a specified range.
+// Function for collecting an integer value from the user in a specified range.
+// lowerBound - Inclusive lower bound on the integer value to collect.
+// upperBound - Inclusive upper bound on the integer value to collect.
+// Returns the collected integer.
 func CollectIntegerInRange(lowerBound int32, upperBound int32) int32 {
 	var startMessage string = fmt.Sprintf("Please type an integer from %d to %d.\n", lowerBound, upperBound)
 	var rangeErrorMessage string = fmt.Sprintf("The answer was too large or too small. Please type an integer between %d and %d\n", lowerBound, upperBound)
@@ -158,6 +184,9 @@ func CollectIntegerInRange(lowerBound int32, upperBound int32) int32 {
 }
 
 // Function for collecting a bitmap from user input.
+// options - Indicates the number of bits in the bitmap, and therefore, the number of options toggled by the bitmap.
+// E.g, 0b1111 - 4 options, 0b1010 - 4 options, 0b10101 - 5 options
+// Returns the bitmap as an integer.
 func CollectBitmap(options int32) int32 {
 
 	var answerLimit int32 = (1 << options) - 1

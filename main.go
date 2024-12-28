@@ -25,7 +25,6 @@ func main() {
 
 	var keepRunning bool = true
 	for keepRunning {
-		// List current settings here
 		iomanagement.ListMainMenuOptions()
 		var option int32 = iomanagement.CollectIntegerInRange(1, 3)
 		switch option {
@@ -41,6 +40,8 @@ func main() {
 }
 
 // Private method for running the game.
+// gameManager - References a struct containing game settings and statistics
+// numSource - References a random number generator that generates int64 values.
 func runGame(gameManager *gamemanagement.GameManager, numSource *rand.Source) {
 	timeUp := false
 	go startGameTimer(gameManager, 2, &timeUp)
